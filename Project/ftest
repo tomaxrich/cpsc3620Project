@@ -1,0 +1,45 @@
+#CPSC 3620 Project 
+#File Name:	Find
+#Author:	Thomas Richardson
+#Purpose:	To find a given word within the file sytem structure
+#Breif Description:	This function is given a word, which it then parses into to strings. The 
+#			first string is a single letter which is used to descend into the file
+#			Structure. The second string is the remainder of the given word which it
+#			then uses to recurisevily find if the given word is in the structure.
+
+
+#!/bin/sh
+if [ "$#" = 0 ]
+	then
+		echo "No arguement provided"
+		exit 1
+fi
+if [ -d troot ];
+then
+cd troot
+find(){
+	temp="$@"
+	s1="${temp:0:1}"
+	s2="${temp:1}"
+	if [ -d "$s1" ]; then
+		cd $s1
+		if [[ $s2 > 0 ]]; then 
+				find $s2;
+			else 
+				if [ -f "$input".txt ]; then
+					pwd
+				else
+					echo "Not Found"
+				fi
+				exit 0;
+			fi
+	else
+		echo "Not Found"
+	fi
+}
+else
+echo "No Tree"
+fi
+input="$@"
+temp="$@"
+find $temp

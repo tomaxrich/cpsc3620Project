@@ -1,0 +1,68 @@
+#CPSC 3620 Project 
+#File Name:	Menu
+#Author:	Thomas Richardson
+#Purpose:	To create a user interface for trie data structure
+#Breif Description:	This program implements a user interface to store and access data.
+
+#!/bin/sh
+option1(){
+	echo "Enter Key: "
+	read newKey
+	./dtest $newKey
+}
+option2(){
+	echo "Enter Key: "
+	read oldKey
+	echo $oldKey
+	./insert.txt $oldKey
+}
+option3(){
+	echo "Enter Key: "
+	read newKey
+	./ftest $newKey
+}
+option4(){
+	test=0
+}
+#option5(){
+#	shopt -s globstar
+#	for file in **/*
+#	do
+#	    slash=${file//[^\/]}
+#	    case "${#slash}" in
+#	        0) echo "|-- ${file}";;
+#	        1) echo "|   |--  ${file}";;
+#	        2) echo "|   |   |--  ${file}";;
+#	    esac
+#	done
+#}
+test=1
+while [ $test = 1 ]
+do
+echo "Welcome to our Trie!"
+echo "How would you like to proceed please enter an option found below: "
+echo "	d:	To delete a Key"
+echo "	i:	To insert a Key"
+echo "	f:	To find a Key"
+echo "	t:	To display Tree"
+echo "	q:	To quit this program"
+echo "Enter your option and hit <Enter>: \c"
+read option
+case "$option" in
+	d) option1
+		continue
+		;;
+	i) option2
+		continue
+		;;
+	f) option3
+		continue
+		;;
+	t) tree
+		continue
+		;;
+	q) option4
+		;;
+esac
+done
+exit 0

@@ -1,0 +1,60 @@
+#CPSC 3620 Project
+#File Name:	Insert
+#Author:	Thomas Richardson
+#Purpose:	To insert a given word within a file structure
+#Breif Description:	This function takes a word as a parameter, which it then parses into strings.
+#			There are to strings; one to make a folder, and one to continue the insertion.
+#			This function recursively descends into the existing structure to properly
+#			insert the word.
+
+#!/bin/sh
+if [ "$#" = 0 ]
+	then 
+		echo "No arguement provided"
+		exit 1
+fi
+Insert(){
+	temp="$@"
+	s1="${temp:0:1}"
+	s2="${temp:1}"
+	if [ -d "$s1" ]; then
+		cd $s1
+		if [[ $s2 > 1 ]]; then 
+			Insert $s2
+		else 
+			if [ -f "$input".txt ]; then
+				echo "Previously Inserted"
+				exit 0;
+			else						
+				echo "inside file" > "$input".txt
+				echo "Inserted"
+				exit 0;
+			fi
+		fi
+	else
+		mkdir $s1
+		cd $s1
+		if [[ $s2 > 1 ]]; then 
+			Insert $s2
+		else 
+			if [ -f "$input".txt ]; then
+				echo "Previously Inserted"
+				exit 0;
+			else						
+				echo "inside file" > "$input".txt
+				echo "Inserted"
+				exit 0;
+			fi
+		fi
+	fi
+}
+temp="$@"
+input="$@"
+if [ -d "troot" ]; then
+	cd troot
+	Insert $temp
+else 
+	mkdir troot
+	cd troot
+	Insert $temp
+fi

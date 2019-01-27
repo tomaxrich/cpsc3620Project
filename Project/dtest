@@ -1,0 +1,48 @@
+#!/bin/bash
+home=$(pwd)
+echo "$@"
+if [ -d troot ];
+    then
+    fdir=$(./ftest $@)
+    echo $fdir
+    #find returns a directory under $fdir
+    cd troot
+    tdir=$(pwd)
+    if [ $fdir = "Not Found" ] || [ $fdir = "No Tree" ];
+    then
+	echo "Does Not Exist"
+	exit 1
+    fi
+    
+    if [ $tdir != $fdir ];
+    then
+	cd $fdir
+	echo $(pwd)
+	if [ -e "$@".txt ]; 
+	then
+	    rm "$@".txt
+	    
+	    if [ "$(ls -A $(pwd))" ]; 
+	    then
+		#exists more files in dir
+		echo "Deleted .txt file"
+		exit 1
+	    else
+		until [ "$(ls -A $(pwd))" ] || [ $(pwd) = $home ];
+		do
+		    dir=$(pwd)
+		    cd ..
+		    rmdir $dir
+		done
+		#no more files exist
+		#Recursive delete
+		echo "directories have been deleted"
+	    fi
+	else
+	    echo "no .txt found"
+	    exit 0
+	fi
+    fi
+else
+    echo "No Tree"
+fi
